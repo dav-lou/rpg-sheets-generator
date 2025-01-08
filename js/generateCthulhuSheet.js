@@ -63,7 +63,101 @@ const generateRandomSheet = () => {
     "Wilhelmina",
   ];
 
-  const occupation = [
+  const surnames = [
+    "Adams",
+    "Allen",
+    "Anderson",
+    "Bailey",
+    "Baker",
+    "Barnes",
+    "Becker",
+    "Bell",
+    "Bennett",
+    "Bianchi",
+    "Brooks",
+    "Brown",
+    "Brownie",
+    "Butler",
+    "Campbell",
+    "Carter",
+    "Clark",
+    "Coleman",
+    "Collins",
+    "Cooper",
+    "Edwards",
+    "Esposito",
+    "Evans",
+    "Fedorov",
+    "Ferrari",
+    "Fischer",
+    "Foster",
+    "Garcia",
+    "Gonzales",
+    "Gray",
+    "Green",
+    "Hall",
+    "Harris",
+    "Hayes",
+    "Henderson",
+    "Hill",
+    "Hoffman",
+    "Howard",
+    "Ivanov",
+    "Jackson",
+    "Jameson",
+    "Jenkins",
+    "Johnson",
+    "Jones",
+    "King",
+    "Kuznetsov",
+    "Lewis",
+    "Martin",
+    "Meyer",
+    "Miller",
+    "Mitchell",
+    "Moore",
+    "Morris",
+    "Müller",
+    "Morgan",
+    "Murphy",
+    "Nelson",
+    "Patterson",
+    "Perez",
+    "Phillips",
+    "Popov",
+    "Powell",
+    "Price",
+    "Ramirez",
+    "Reed",
+    "Richardson",
+    "Rivera",
+    "Roberts",
+    "Rogers",
+    "Rossi",
+    "Russo",
+    "Sidorov",
+    "Schmidt",
+    "Schneider",
+    "Smirnov",
+    "Smith",
+    "Sokolov",
+    "Stewart",
+    "Taylor",
+    "Thomas",
+    "Thompson",
+    "Turner",
+    "Vasiliev",
+    "Walker",
+    "Wander",
+    "Watson",
+    "Weber",
+    "White",
+    "Wilson",
+    "Wright",
+    "Young",
+  ];
+  
+  const occupations = [
     "Academic",
     "Actor",
     "Antiquarian",
@@ -95,11 +189,13 @@ const generateRandomSheet = () => {
   ];
 
   const randomName = names[randomIndex(names)];
-  const randomOccupation = occupation[randomIndex(occupation)];
+  const randomSurname = surnames[randomIndex(surnames)];
+  const randomOccupations = occupations[randomIndex(occupations)];
 
   return {
     name: randomName,
-    occupation: randomOccupation,
+    surname: randomSurname,
+    occupations: randomOccupations,
     strength: roll3d6(),
     constitution: roll3d6(),
     dexterity: roll3d6(),
@@ -123,8 +219,8 @@ const roll3d6 = () => {
 const displaySheet = (sheet) => {
   const sheetDiv = document.getElementById("sheet");
   sheetDiv.innerHTML = ` 
-  <p><strong>Name:</strong> ${sheet.name}</p>
-  <p><strong>Occupation:</strong> ${sheet.occupation}</p>
+  <p><strong>Name:</strong> ${sheet.name} ${sheet.surname}</p>
+  <p><strong>Occupation:</strong> ${sheet.occupations}</p>
   <p><strong>Strength:</strong> ${sheet.strength}</p>
   <p><strong>Constitution:</strong> ${sheet.constitution}</p>
   <p><strong>Power:</strong> ${sheet.power}</p>
