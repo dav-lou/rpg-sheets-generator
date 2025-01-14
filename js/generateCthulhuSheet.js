@@ -2,195 +2,37 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("sheet").style.display = "none";
 });
 
-document.getElementById("generate").addEventListener("click", () => {
-  const sheet = generateRandomSheet();
-  displaySheet(sheet);
-  document.getElementById("sheet").style.display = "block";
+document.getElementById("generate").addEventListener("click", async () => {
+  const sheet = await generateRandomSheet();
+  if (sheet) {
+    displaySheet(sheet);
+    document.getElementById("sheet").style.display = "block";
+  }
 });
 
-const generateRandomSheet = () => {
-  const names = [
-    // Male
-    "Albert",
-    "Arthur",
-    "Benjamin",
-    "Charles",
-    "Claude",
-    "Clarence",
-    "Edgar",
-    "Edward",
-    "Frank",
-    "George",
-    "Harry",
-    "Jack",
-    "James",
-    "John",
-    "Joseph",
-    "Louis",
-    "Martin",
-    "Richard",
-    "Robert",
-    "Samuel",
-    "Thomas",
-    "Walter",
-    "William",
+const fetchData = async () => {
+  const [namesResponse, surnamesResponse, occupationsResponse] =
+    await Promise.all([
+      fetch("http://localhost:3000/names"),
+      fetch("http://localhost:3000/surnames"),
+      fetch("http://localhost:3000/occupations"),
+    ]);
 
-    // Female
-    "Agnes",
-    "Alice",
-    "Anna",
-    "Bernice",
-    "Catherine",
-    "Clara",
-    "Dorothy",
-    "Eleanor",
-    "Elizabeth",
-    "Ella",
-    "Ethel",
-    "Flora",
-    "Frances",
-    "Helen",
-    "Irene",
-    "Jane",
-    "Lillian",
-    "Louise",
-    "Margaret",
-    "Martha",
-    "Mary",
-    "Nellie",
-    "Ruth",
-    "Virginia",
-    "Wilhelmina",
-  ];
+  const [names, surnames, occupations] = await Promise.all([
+    namesResponse.json(),
+    surnamesResponse.json(),
+    occupationsResponse.json(),
+  ]);
 
-  const surnames = [
-    "Adams",
-    "Allen",
-    "Anderson",
-    "Bailey",
-    "Baker",
-    "Barnes",
-    "Becker",
-    "Bell",
-    "Bennett",
-    "Bianchi",
-    "Brooks",
-    "Brown",
-    "Brownie",
-    "Butler",
-    "Campbell",
-    "Carter",
-    "Clark",
-    "Coleman",
-    "Collins",
-    "Cooper",
-    "Edwards",
-    "Esposito",
-    "Evans",
-    "Fedorov",
-    "Ferrari",
-    "Fischer",
-    "Foster",
-    "Garcia",
-    "Gonzales",
-    "Gray",
-    "Green",
-    "Hall",
-    "Harris",
-    "Hayes",
-    "Henderson",
-    "Hill",
-    "Hoffman",
-    "Howard",
-    "Ivanov",
-    "Jackson",
-    "Jameson",
-    "Jenkins",
-    "Johnson",
-    "Jones",
-    "King",
-    "Kuznetsov",
-    "Lewis",
-    "Martin",
-    "Meyer",
-    "Miller",
-    "Mitchell",
-    "Moore",
-    "Morris",
-    "Müller",
-    "Morgan",
-    "Murphy",
-    "Nelson",
-    "Patterson",
-    "Perez",
-    "Phillips",
-    "Popov",
-    "Powell",
-    "Price",
-    "Ramirez",
-    "Reed",
-    "Richardson",
-    "Rivera",
-    "Roberts",
-    "Rogers",
-    "Rossi",
-    "Russo",
-    "Sidorov",
-    "Schmidt",
-    "Schneider",
-    "Smirnov",
-    "Smith",
-    "Sokolov",
-    "Stewart",
-    "Taylor",
-    "Thomas",
-    "Thompson",
-    "Turner",
-    "Vasiliev",
-    "Walker",
-    "Wander",
-    "Watson",
-    "Weber",
-    "White",
-    "Wilson",
-    "Wright",
-    "Young",
-  ];
+  return { names, surnames, occupations };
+};
 
-  const occupations = [
-    "Academic",
-    "Actor",
-    "Antiquarian",
-    "Artist",
-    "Athlete",
-    "Criminal",
-    "Detective",
-    "Doctor",
-    "Engineer",
-    "Farmer",
-    "Grave Digger",
-    "Historian",
-    "Journalist",
-    "Lawyer",
-    "Librarian",
-    "Medician",
-    "Military Officer",
-    "Musician",
-    "Private Investigator",
-    "Professor",
-    "Pugilist",
-    "Scientist",
-    "Soldier",
-    "Street Urchin",
-    "Surgeon",
-    "Thief",
-    "Veterinarian",
-    "Writer",
-  ];
+const generateRandomSheet = async () => {
+  const { names, surnames, occupations } = await fetchData();
 
-  const randomName = names[randomIndex(names)];
-  const randomSurname = surnames[randomIndex(surnames)];
-  const randomOccupations = occupations[randomIndex(occupations)];
+  const randomName = names[randomIndex(names)].name;
+  const randomSurname = surnames[randomIndex(surnames)].surname;
+  const randomOccupations = occupations[randomIndex(occupations)].occupation;
   const randomStrength = roll3d6Times5();
   const randomConstitution = roll3d6Times5();
   const randomDexterity = roll3d6Times5();
