@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "express": "^4.21.2",
+    "nodemon": "^3.1.9"
+  },
+  "name": "rpg-sheets-generator",
+  "version": "1.0.0",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
