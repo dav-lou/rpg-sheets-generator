@@ -6,7 +6,7 @@ document.getElementById("generate").addEventListener("click", async () => {
   const sheet = await generateRandomSheet();
   if (sheet) {
     displaySheet(sheet);
-    document.getElementById("sheet").style.display = "block";
+    document.getElementById("sheet").style.display = "flex";
   }
 });
 
@@ -22,15 +22,26 @@ const fetchData = async () => {
   return [names, surnames, occupations];
 };
 
+const fetchRandomPic = async () => {
+  const response = await fetch("https://randomuser.me/api/");
+  const data = await response.json();
+  return data.results[0];
+};
+
 const generateRandomSheet = async () => {
   const data = await fetchData();
   const names = data[0];
   const surnames = data[1];
   const occupations = data[2];
 
-  const randomName = names[randomIndex(names)].name;
+  const randomPic = await fetchRandomPic();
+  const gender = randomPic.gender;
+  const picture = randomPic.picture.large;
+
+  const nameByGender = names.filter((name) => name.gender === gender);
+  const randomName = nameByGender[randomIndex(nameByGender)].name;
   const randomSurname = surnames[randomIndex(surnames)].surname;
-  const randomOccupations = occupations[randomIndex(occupations)].occupation;
+  const randomOccupation = occupations[randomIndex(occupations)].occupation;
   const randomStrength = roll3d6Times5();
   const randomConstitution = roll3d6Times5();
   const randomDexterity = roll3d6Times5();
@@ -43,9 +54,10 @@ const generateRandomSheet = async () => {
   const randomMove = calculateMove(randomDexterity, randomSize, randomStrength);
 
   return {
+    picture: picture,
     name: randomName,
     surname: randomSurname,
-    occupations: randomOccupations,
+    occupation: randomOccupation,
     strength: randomStrength,
     constitution: randomConstitution,
     dexterity: randomDexterity,
@@ -87,9 +99,13 @@ const calculateMove = (dexterity, size, strength) => {
 };
 
 const displaySheet = (sheet) => {
-  document.getElementById("sheet").innerHTML = `
+  document.getElementById("mainInfo").innerHTML = `
   <p><strong>Name:</strong> ${sheet.name} ${sheet.surname}</p>
-  <p><strong>Occupation:</strong> ${sheet.occupations}</p>
+  <p><strong>Occupation:</strong> ${sheet.occupation}</p>`;
+  document.getElementById(
+    "picture"
+  ).innerHTML = `<img src="${sheet.picture}"/>`;
+  document.getElementById("characteristics").innerHTML = `
   <p><strong>Strength(STR):</strong> ${sheet.strength}</p>
   <p><strong>Constitution(CON):</strong> ${sheet.constitution}</p>
   <p><strong>Dexterity(DEX):</strong> ${sheet.dexterity}</p>
@@ -98,10 +114,18 @@ const displaySheet = (sheet) => {
   <p><strong>Education(EDU):</strong> ${sheet.education}</p>
   <p><strong>Size(SIZ):</strong> ${sheet.size}</p>
   <p><strong>Power(POW):</strong> ${sheet.power}</p>
-  <p><strong>Magic Points:</strong> ${sheet.magicPoints}</p>
-  <p><strong>Hit Points:</strong> ${sheet.hitPoints}</p>
-  <p><strong>Sanity:</strong> ${sheet.sanity}</p>
-  <p><strong>Luck:</strong> ${sheet.luck}</p>
   <p><strong>Move:</strong> ${sheet.move}</p>
+  `;
+  document.getElementById("hitPoints").innerHTML = `
+  <p><strong>Hit Points</strong> ${sheet.hitPoints}</p>
+  `;
+  document.getElementById("luck").innerHTML = `
+  <p><strong>Luck</strong><br>${sheet.luck}</p>
+  `;
+  document.getElementById("sanity").innerHTML = `
+  <p><strong>Sanity</strong> ${sheet.sanity}</p>
+  `;
+  document.getElementById("magicPoints").innerHTML = `
+  <p><strong>Magic Points</strong> ${sheet.magicPoints}</p>
   `;
 };

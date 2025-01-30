@@ -1,15 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RPG Sheet Generator</title>
-    <link rel="stylesheet" href="css/styles.css" />
-  </head>
-  <body>
-    <h1 id="mainTitle">RPG Sheet Generator</h1>
-    <button id="generate">Generate Sheet</button>
-    <div id="sheet"></div>
-    <script src="js/generateCthulhuSheet.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RPG Sheet Generator</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="icon" href="favicon.ico" />
+</head>
+
+<body>
+  <h1 id="mainTitle">RPG Sheet Generator</h1>
+  <button id="generate">Generate Sheet</button>
+  <div id="sheet">
+    <div class="sideColContainer">
+      <div id="mainInfo"></div>
+      <div id="picture"></div>
+    </div>
+    <div id="characteristics"></div>
+    <div class="sideColContainer">
+      <div id="hitPoints"></div>
+      <div id="luck"></div>
+      <div id="sanity"></div>
+      <div id="magicPoints"></div>
+    </div>
+  </div>
+  <script src="js/generateCthulhuSheet.js"></script>
+</body>
+
 </html>

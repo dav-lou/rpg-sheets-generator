@@ -1,35 +1,123 @@
 * {
-    font-family: 'Courier New', Courier, monospace;
-    text-align: center;
+  font-family: "Courier New", Courier, monospace;
 }
 
 body {
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #292929;
+  padding: 16px;
 }
 
 h1 {
-    font-size: 36px;
+  font-size: 32px;
+  color: #ffdd00;
 }
 
 #generate {
-    padding: 10px 20px;
-    font-weight: 600;
-    border: 1px solid #000000;
-    border-radius: 8px;
-    font-size: 24px;
+  padding: 8px 16px;
+  font-weight: 600;
+  font-size: 22px;
+  border: 1px #000;
+  border-radius: 8px;
+  background-color: #ececec;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#generate:hover {
+  background-color: #000;
+  color: #ececec;
+  cursor: pointer;
 }
 
 #sheet {
-    margin-top: 20px;
-    padding: 20px;
-    border: 1px solid #000000;
-    border-radius: 8px;
-    background-color: #faebd7;
-    font-size: 24px;
+  justify-content: space-around;
+  margin-top: 16px;
+  padding: 24px;
+  font-size: 22px;
+  border: 1px #000;
+  border-radius: 8px;
+  background-color: #ececec;
+  gap: 16px;
+}
+
+#mainInfo,
+#picture,
+#hitPoints,
+#luck,
+#sanity,
+#magicPoints,
+#characteristics {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid #000;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+#name {
+  width: auto;
+}
+
+#picture {
+  background-color: whitesmoke;
+  min-width: 344px;
+  padding: 18px 18px 90px;
+}
+
+#characteristics {
+  white-space: nowrap;
+  text-align: left;
+}
+
+.sideColContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+#hitPoints,
+#luck,
+#sanity,
+#magicPoints {
+  display: flex;
+  text-align: center;
+  width: 96px;
+  height: 96px;
+}
+
+/* Responsiveness */
+@media (max-width: 1024px) {
+  h1 {
+    text-align: center;
+  }
+  #sheet {
+    font-size: 18px;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+  }
+
+  .sideColContainer {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  #mainInfo,
+  #picture {
+    min-width: 55%;
+  }
+
+  #hitPoints,
+  #luck,
+  #sanity,
+  #magicPoints {
+    width: 80px;
+    height: 80px;
+  }
 }
