@@ -11,24 +11,22 @@ document.getElementById("generate").addEventListener("click", async () => {
 });
 
 const fetchData = async () => {
-  const [namesResponse, surnamesResponse, occupationsResponse] =
-    await Promise.all([
-      fetch("http://localhost:3000/names"),
-      fetch("http://localhost:3000/surnames"),
-      fetch("http://localhost:3000/occupations"),
-    ]);
+  const namesResponse = await fetch("/names");
+  const surnamesResponse = await fetch("/surnames");
+  const occupationsResponse = await fetch("/occupations");
 
-  const [names, surnames, occupations] = await Promise.all([
-    namesResponse.json(),
-    surnamesResponse.json(),
-    occupationsResponse.json(),
-  ]);
+  const names = await namesResponse.json();
+  const surnames = await surnamesResponse.json();
+  const occupations = await occupationsResponse.json();
 
-  return { names, surnames, occupations };
+  return [names, surnames, occupations];
 };
 
 const generateRandomSheet = async () => {
-  const { names, surnames, occupations } = await fetchData();
+  const data = await fetchData();
+  const names = data[0];
+  const surnames = data[1];
+  const occupations = data[2];
 
   const randomName = names[randomIndex(names)].name;
   const randomSurname = surnames[randomIndex(surnames)].surname;
@@ -89,8 +87,7 @@ const calculateMove = (dexterity, size, strength) => {
 };
 
 const displaySheet = (sheet) => {
-  const sheetDiv = document.getElementById("sheet");
-  sheetDiv.innerHTML = ` 
+  document.getElementById("sheet").innerHTML = `
   <p><strong>Name:</strong> ${sheet.name} ${sheet.surname}</p>
   <p><strong>Occupation:</strong> ${sheet.occupations}</p>
   <p><strong>Strength(STR):</strong> ${sheet.strength}</p>
